@@ -208,5 +208,6 @@ class EcoSortApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.iconbitmap("EcoSort.ico")
     app = EcoSortApp(root)
     root.mainloop()
