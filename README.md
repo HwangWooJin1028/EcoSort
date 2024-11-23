@@ -10,6 +10,7 @@ Yolov5 기반 실시간 쓰레기 분류 프로그램, EcoSort
 <br/><br/><br/>
 
 ## 개발 환경
+![image](https://github.com/user-attachments/assets/9fca1bed-c185-4c44-9fb2-120b50175313)
 
 <br/><br/><br/>
 
@@ -19,8 +20,15 @@ Yolov5 기반 실시간 쓰레기 분류 프로그램, EcoSort
 [<img src="https://img.shields.io/badge/roboflow-5C2D91?style=for-the-badge&logo=roboflow&logoColor=white">](https://universe.roboflow.com/ecotrack/ecotrack)
 - colab을 통해 모델 학습
 - roboflow를 통해 데이터 획득
+- 자세한 모델 학습 코드는 위의 COLAB 사진 클릭
 <br/><br/><br/>
 
+
+## Native App
+- colab을 통해 학습된 모델을 로드하여 객체 탐지
+- 실시간 웹캠 프레임 및 이미지를 객체탐지하여 화면에 출력
+- 자세한 코드는 EcoSort.py 코드 확인
+<br/><br/><br/>
 
 ## UI 화면
 &nbsp;&nbsp;📌 화면 UI <br/>
