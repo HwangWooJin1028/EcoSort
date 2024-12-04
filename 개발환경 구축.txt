@@ -1,0 +1,25 @@
+1. python 버전은 3.10.0.0 버전으로 하여 설치한다.
+    - 설치 링크: https://www.python.org/downloads/release/python-3100/
+    - 사이트의 Files 메뉴에서 사용하고 있는 os 버전을 클릭하여 설치
+
+2. visual studio code 설치
+    - visual studio code의 버전은 어떠한 버전이든 관계없다.
+
+3. visual studio code 을 실행하여 왼쪽에 존재하는 메뉴 아이콘 중 4번째 아이콘을 클릭
+    - 해당 메뉴는 visual studio code 프로그램의 확장 프로그램을 설치하는 메뉴
+    - 검색 창에 python을 검색하여 python 확장 프로그램 설치
+
+4. ctrl + shift + p 단축키를 통해 select interpreter 메뉴를 검색하고 클릭. 
+    - 이때, 실행하고자 하는 코드를 어떠한 파이썬 버전으로 실행을 할것인지 선택하는 것이다.
+    - 파이썬 버전은 3.10.0 버전으로 실행할 것을 권장한다.
+
+5. 아래의 라이브러리 설치 코드를 통해 라이브러리 설치
+    - opencv, torch 는 따로 pip 명령어를 통해 설치한다.
+    1) pip install -r requirements.txt 
+    2) pip install opencv-python
+    3) pip install opencv-contrib-python
+    4) pip install torch==2.5.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+    5) pip install pandas
+    5) 그 후 다시 pip install -r requirements.txt 명령어 실행
+
+** 문의 사항은 1028hwj@gmail.com
