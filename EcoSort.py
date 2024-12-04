@@ -8,6 +8,16 @@ import numpy as np
 import platform
 import pathlib
 
+# EcoSort Native 프로그램 코드
+# 이 코드를 실행시키기 전, 터미널에 아래의 코드를 입력하여 필요한 라이브러리 다운로드. 개발환경 구축에 관한 자세한 설명은 '개발환경 구축.txt' 에서
+# python 버전은 3.10.0.0 버전으로 한다.
+# 순서대로 라이브러리 전체 설치, opencv 설치, opencv 관련 라이브러리 설치, torch 설치이다.
+# opencv, torch 는 따로 pip 명령어를 통해 설치
+# pip install -r requirements.txt 
+# pip install opencv-python
+# pip install opencv-contrib-python
+# pip install torch==2.5.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+# 그 후 다시 pip install -r requirements.txt 명령어 실행
 class EcoSortApp:
     def __init__(self, root):
         self.root = root
@@ -27,7 +37,7 @@ class EcoSortApp:
             # 현재 파일의 디렉토리 절대 경로를 가져온다.
             current_dir = pathlib.Path(__file__).parent.resolve()
             # / 연산자를 이용해 경로를 쉽게 추가
-            model_path = current_dir / "trash_model_best.pt"
+            model_path = current_dir / "best_ecotrack.pt"
             # Path 객체를 string으로
             model_path = str(model_path)
             # custom으로 model을 업로드
@@ -42,12 +52,8 @@ class EcoSortApp:
             root.destroy()
             return
 
-        # 현재 컴퓨터에 연결되어 있는 카메라가 있는지 확인
-        self.cap = cv2.VideoCapture(0)
-        if not self.cap.isOpened():
-            messagebox.showerror("Error", "웹캠을 열 수 없습니다.")
-            root.destroy()
-            return
+        # 현재 컴퓨터에 연결되어 있는 카메라가 있는지 확인하는 변수 미리 선언
+        self.cap = None
         
         # root에 button, image, label 등을 추가.
         self.create_widgets()
@@ -57,7 +63,7 @@ class EcoSortApp:
     # program에 label 등을 추가
     def create_widgets(self):
         # 위아래 15px 간격
-        # 버튼 3개를 탐는 컨테이너
+        # 버튼 3개를 탐는 컨테이너. 프레임 생성
         top_frame = ttk.Frame(self.root)
         top_frame.pack(pady=15) 
         
@@ -109,6 +115,8 @@ class EcoSortApp:
         # 탐지를 하기 위해 이미지를 rgb 형식으로 변환
         image = Image.open(self.image_path).convert("RGB")
         # 탐지를 하기 위해 NumPy 배열 형태로
+        # opencv에서 이미지를 읽어오면 numpy 배열 형태로 가져옴
+        # 본 프로젝트에서는 최대한 많은 라이브러리를 활용해보기 위해 pllow 라이브러리와 numpy 라이브러리를 사용함
         image_np = np.array(image)
         
         ## 이미지 탐지 시작 ##
@@ -147,6 +155,12 @@ class EcoSortApp:
 
     # 비디오 프레임 객체 탐지
     def update_frame(self):
+        # 현재 컴퓨터에 연결되어 있는 카메라가 있는지 확인
+        self.cap = cv2.VideoCapture(0)
+        if not self.cap.isOpened():
+            messagebox.showerror("Error", "웹캠을 열 수 없습니다.")
+            return
+        
         if self.is_detecting:
             # 현재 작동되고 있는 카메라의 한 프레임 받기
             ret, frame = self.cap.read()
@@ -201,13 +215,15 @@ class EcoSortApp:
 
     # 카메라를 끈 후, 윈도우 화면 종료
     def quit_app(self):
-        if self.cap.isOpened():
-            self.cap.release()
-        self.root.destroy()
+        try:
+            if self.cap.isOpened():
+                self.cap.release()
+            self.root.destroy()
+        except Exception as e:
+            self.root.destroy()
 
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.iconbitmap("EcoSort.ico")
     app = EcoSortApp(root)
     root.mainloop()
